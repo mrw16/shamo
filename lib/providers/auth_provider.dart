@@ -63,16 +63,14 @@ class AuthProvider with ChangeNotifier {
     required String token,
   }) async {
     try {
-      if (await AuthService().editProfile(
+      UserModel user = await AuthService().editProfile(
         name: name,
         username: username,
         email: email,
         token: token,
-      )) {
-        return true;
-      }
+      );
 
-      // _user = user;
+      _user = user;
 
       return true;
     } catch (e) {

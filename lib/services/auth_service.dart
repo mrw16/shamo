@@ -72,7 +72,7 @@ class AuthService {
     }
   }
 
-  Future<bool> editProfile({
+  Future<UserModel> editProfile({
     required String name,
     required String username,
     required String email,
@@ -99,7 +99,10 @@ class AuthService {
     print(response.body);
 
     if (response.statusCode == 200) {
-      return true;
+      var data = jsonDecode(response.body)['data'];
+      UserModel user = UserModel.fromJson(data);
+
+      return user;
     } else {
       throw Exception('Gagal Update Profil');
     }
