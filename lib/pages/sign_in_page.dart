@@ -109,6 +109,16 @@ class _SignInPageState extends State<SignInPage> {
                       child: TextFormField(
                         style: primaryTextStyle,
                         controller: emailController,
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty ||
+                              value.length < 8) {
+                            return 'Minimal 8 karakter';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        textCapitalization: TextCapitalization.none,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your Email Address',
                           hintStyle: subtitleTextStyle,

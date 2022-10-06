@@ -210,6 +210,7 @@ class _ProductPageState extends State<ProductPage> {
       return Container(
         margin: EdgeInsets.only(top: 17),
         width: double.infinity,
+        height: MediaQuery.of(context).size.height - 350,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(24),

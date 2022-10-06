@@ -219,6 +219,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: TextFormField(
                         style: primaryTextStyle,
                         controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        textCapitalization: TextCapitalization.none,
                         decoration: InputDecoration.collapsed(
                           hintText: 'Your Email Address',
                           hintStyle: subtitleTextStyle,
