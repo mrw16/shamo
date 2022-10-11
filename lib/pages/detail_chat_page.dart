@@ -218,6 +218,7 @@ class _DetailChatPageState extends State<DetailChatPage> {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: backgroundColor3,
       appBar: header(),
       bottomNavigationBar: chatInput(),

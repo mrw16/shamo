@@ -350,8 +350,8 @@ class _SignUpPageState extends State<SignUpPage> {
           margin: EdgeInsets.symmetric(
             horizontal: defaultMargin,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               header(),
               nameInput(),

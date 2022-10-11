@@ -158,7 +158,7 @@ class ProfilePage extends StatelessWidget {
       );
     }
 
-    return Column(
+    return ListView(
       children: [
         header(),
         content(),
