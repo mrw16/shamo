@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shamo/models/product_model.dart';
 import 'package:shamo/theme.dart';
 
-class ChatBubble extends StatelessWidget {
+class ChatBubble extends StatefulWidget {
   final String text;
   final bool isSender;
   final ProductModel? product;
@@ -17,6 +17,11 @@ class ChatBubble extends StatelessWidget {
   });
 
   @override
+  State<ChatBubble> createState() => _ChatBubbleState();
+}
+
+class _ChatBubbleState extends State<ChatBubble> {
+  @override
   Widget build(BuildContext context) {
     Widget productPreview() {
       return Container(
@@ -25,12 +30,12 @@ class ChatBubble extends StatelessWidget {
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(isSender ? 12 : 0),
-            topRight: Radius.circular(isSender ? 0 : 12),
+            topLeft: Radius.circular(widget.isSender ? 12 : 0),
+            topRight: Radius.circular(widget.isSender ? 0 : 12),
             bottomLeft: Radius.circular(12),
             bottomRight: Radius.circular(12),
           ),
-          color: isSender ? backgroundColor5 : backgroundColor4,
+          color: widget.isSender ? backgroundColor5 : backgroundColor4,
         ),
         child: Column(
           children: [
@@ -39,7 +44,7 @@ class ChatBubble extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    product!.galleries![0].url,
+                    widget.product!.galleries![0].url,
                     width: 70,
                   ),
                 ),
@@ -51,14 +56,14 @@ class ChatBubble extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        product!.name!,
+                        widget.product!.name!,
                         style: primaryTextStyle,
                       ),
                       SizedBox(
                         height: 4,
                       ),
                       Text(
-                        '\$${product!.price}',
+                        '\$${widget.product!.price}',
                         style: priceTextStyle.copyWith(fontWeight: medium),
                       ),
                     ],
@@ -117,12 +122,12 @@ class ChatBubble extends StatelessWidget {
       margin: EdgeInsets.only(top: 30),
       child: Column(
         crossAxisAlignment:
-            isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            widget.isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          product is UninitializedProductModel ? SizedBox() : productPreview(),
+          widget.product is UninitializedProductModel ? SizedBox() : productPreview(),
           Row(
             mainAxisAlignment:
-                isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+                widget.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
             children: [
               Flexible(
                 child: Container(
@@ -135,15 +140,15 @@ class ChatBubble extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(isSender ? 12 : 0),
-                      topRight: Radius.circular(isSender ? 0 : 12),
+                      topLeft: Radius.circular(widget.isSender ? 12 : 0),
+                      topRight: Radius.circular(widget.isSender ? 0 : 12),
                       bottomLeft: Radius.circular(12),
                       bottomRight: Radius.circular(12),
                     ),
-                    color: isSender ? backgroundColor5 : backgroundColor4,
+                    color: widget.isSender ? backgroundColor5 : backgroundColor4,
                   ),
                   child: Text(
-                    text,
+                    widget.text,
                     style: primaryTextStyle,
                   ),
                 ),
