@@ -140,6 +140,56 @@ class _PaymentPageState extends State<PaymentPage> {
                 ],
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            RadioListTile(
+              tileColor: backgroundColor4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              value: "mandiri",
+              groupValue: va,
+              onChanged: (value) {
+                setState(() {
+                  va = value.toString();
+                });
+                print(value);
+              },
+              title: Row(
+                children: [
+                  Image.network(
+                    'https://seeklogo.com/images/B/bank_mandiri-logo-4F6233ABCC-seeklogo.com.png',
+                    width: 60,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            RadioListTile(
+              tileColor: backgroundColor4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              value: "gopay",
+              groupValue: va,
+              onChanged: (value) {
+                setState(() {
+                  va = value.toString();
+                });
+                print(value);
+              },
+              title: Row(
+                children: [
+                  Image.network(
+                    'https://seeklogo.com/images/G/gopay-logo-D27C1EBD0D-seeklogo.com.png',
+                    width: 60,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       );

@@ -2,13 +2,19 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shamo/models/cart_model.dart';
+import 'package:shamo/models/midtrans_model.dart';
 import 'package:shamo/models/user_model.dart';
 
 class TransactionService {
   String baseUrl = 'https://shamo-backend.buildwithangga.id/api';
+  String payType = '';
 
-  Future<bool> checkout(
-      String token, List<CartModel> carts, double totalPrice, String va) async {
+  Future<MidtransModel> checkout({
+    required String token,
+    required List<CartModel> carts,
+    required double totalPrice,
+    required String va,
+  }) async {
     var url = '$baseUrl/checkout';
 
     var urlMidtrans = 'https://api.sandbox.midtrans.com/v2/charge';
@@ -42,15 +48,31 @@ class TransactionService {
       },
     );
 
+    if (va == 'mandiri') {
+      payType = 'echannel';
+      va = 'bni';
+    } else if (va == 'gopay') {
+      payType = 'gopay';
+      va = 'bni';
+    } else {
+      payType = 'bank_transfer';
+    }
+
+    print(payType);
+
     var bodyMidtrans = jsonEncode({
-      'payment_type': 'bank_transfer',
+      'payment_type': payType,
       'bank_transfer': {'bank': va},
+      'gopay': {'enable_callback': true, 'callback_url': 'someapps://callback'},
+      'echannel': {'bill_info1': 'Payment For:', 'bill_info2': 'Other'},
       'transaction_details': {
         'order_id': 'order-102-101' + DateTime.now().toString(),
         'gross_amount': totalPrice
       },
       'customer_details': {
         'email': 'test@Midtrans.com',
+        "first_name": "budi",
+        "last_name": "utomo",
         'phone': '+628112341234'
       },
       'item_details': carts
@@ -71,16 +93,20 @@ class TransactionService {
       body: body,
     );
 
-    await http.post(
+    var responseMidtrans = await http.post(
       Uri.parse(urlMidtrans),
       headers: headersMidtrans,
       body: bodyMidtrans,
     );
 
-    print(va);
+    print(response.body);
+    print(responseMidtrans.body);
 
     if (response.statusCode == 200) {
-      return true;
+      var data = jsonDecode(responseMidtrans.body);
+      MidtransModel midtrans = MidtransModel.fromJson(data);
+
+      return midtrans;
     } else {
       throw Exception('Gagal melakukan checkout');
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/providers/transaction_provider.dart';
 import 'package:shamo/theme.dart';
 
 class CheckoutSuccessPage extends StatelessWidget {
@@ -6,6 +8,9 @@ class CheckoutSuccessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TransactionProvider transactionProvider =
+        Provider.of<TransactionProvider>(context);
+
     header() {
       return AppBar(
         backgroundColor: backgroundColor1,
@@ -40,7 +45,22 @@ class CheckoutSuccessPage extends StatelessWidget {
               height: 12,
             ),
             Text(
-              'Stay at home while we\nprepare your dream shoes',
+              'Lakukan pembayaran untuk\nmenyelesaikan transaksi',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Total Harga : ${transactionProvider.midtrans.grossAmount}',
+              style: primaryTextStyle.copyWith(fontWeight: bold),
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Bank : ${transactionProvider.midtrans.vaNumbers!.first.bank}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Va Number : ${transactionProvider.midtrans.vaNumbers!.first.vaNumber}',
               style: secondaryTextStyle,
               textAlign: TextAlign.center,
             ),
