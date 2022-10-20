@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shamo/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   String baseUrl = 'https://shamo-backend.buildwithangga.id/api';
@@ -64,7 +65,12 @@ class AuthService {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
       UserModel user = UserModel.fromJson(data['user']);
-      user.token = 'Bearer ' + data['access_token'];
+      var token = user.token = 'Bearer ' + data['access_token'];
+
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('email', email!);
+      prefs.setString('password', password!);
+      prefs.setString('token', token);
 
       return user;
     } else {
@@ -125,6 +131,10 @@ class AuthService {
     print(response.body);
 
     if (response.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
+      final removeEmail = prefs.remove('email');
+      final removePassword = prefs.remove('password');
+      final removeToken = prefs.remove('token');
       return true;
     } else {
       throw Exception('Gagal Logout');
