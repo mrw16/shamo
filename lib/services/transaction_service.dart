@@ -1,9 +1,11 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shamo/models/bank_model.dart';
 import 'package:shamo/models/cart_model.dart';
 import 'package:shamo/models/midtrans_model.dart';
 import 'package:shamo/models/user_model.dart';
+import 'package:shamo/providers/auth_provider.dart';
 
 class TransactionService {
   String baseUrl = 'https://shamo-backend.buildwithangga.id/api';
@@ -50,10 +52,10 @@ class TransactionService {
 
     if (va == 'mandiri') {
       payType = 'echannel';
-      va = 'bni';
+      va = 'permata';
     } else if (va == 'gopay') {
       payType = 'gopay';
-      va = 'bni';
+      va = 'permata';
     } else {
       payType = 'bank_transfer';
     }

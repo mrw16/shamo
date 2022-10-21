@@ -1,10 +1,10 @@
 class BankModel {
-  late String bank;
-  late String vaNumber;
+  late String? bank;
+  late String? vaNumber;
 
   BankModel({
-    required this.bank,
-    required this.vaNumber,
+    this.bank,
+    this.vaNumber,
   });
 
   BankModel.fromJson(Map<String, dynamic> json) {
@@ -19,3 +19,5 @@ class BankModel {
     };
   }
 }
+
+class UninitializedBankModel extends BankModel {}

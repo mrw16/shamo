@@ -11,6 +11,8 @@ class CheckoutSuccessPage extends StatelessWidget {
     TransactionProvider transactionProvider =
         Provider.of<TransactionProvider>(context);
 
+    String isPayType = transactionProvider.midtrans.paymentType;
+
     header() {
       return AppBar(
         backgroundColor: backgroundColor1,
@@ -19,6 +21,73 @@ class CheckoutSuccessPage extends StatelessWidget {
           'Checkout Success',
         ),
         elevation: 0,
+      );
+    }
+
+    Widget vaList() {
+      return Container(
+        child: Column(
+          children: [
+            Text(
+              'Bank : ${transactionProvider.midtrans.vaNumbers!.bank}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Va Number : ${transactionProvider.midtrans.vaNumbers!.vaNumber}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget vaList1() {
+      return Container(
+        child: Column(
+          children: [
+            Text(
+              'Bank : ${transactionProvider.midtrans.paymentType}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Bill Key : ${transactionProvider.midtrans.billKey}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Biller Code : ${transactionProvider.midtrans.billerCode}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      );
+    }
+
+    Widget vaList2() {
+      return Container(
+        child: Column(
+          children: [
+            Text(
+              'Bank : ${transactionProvider.midtrans.paymentType}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Bill Key : ${transactionProvider.midtrans.billKey}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              'Biller Code : ${transactionProvider.midtrans.billerCode}',
+              style: secondaryTextStyle,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       );
     }
 
@@ -54,16 +123,7 @@ class CheckoutSuccessPage extends StatelessWidget {
               style: primaryTextStyle.copyWith(fontWeight: bold),
               textAlign: TextAlign.center,
             ),
-            Text(
-              'Bank : ${transactionProvider.midtrans.vaNumbers!.first.bank}',
-              style: secondaryTextStyle,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              'Va Number : ${transactionProvider.midtrans.vaNumbers!.first.vaNumber}',
-              style: secondaryTextStyle,
-              textAlign: TextAlign.center,
-            ),
+            isPayType == 'echannel' ? vaList1() : vaList(),
             Container(
               width: 196,
               height: 44,

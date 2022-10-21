@@ -13,7 +13,9 @@ class MidtransModel {
   late DateTime transactionTime;
   late String transactionStatus;
   late String fraudStatus;
-  late List<BankModel>? vaNumbers;
+  late String? billKey;
+  late String? billerCode;
+  late BankModel? vaNumbers;
 
   MidtransModel({
     required this.transactionId,
@@ -27,6 +29,8 @@ class MidtransModel {
     required this.transactionTime,
     required this.transactionStatus,
     required this.fraudStatus,
+    this.billKey,
+    this.billerCode,
     this.vaNumbers,
   });
 
@@ -42,9 +46,16 @@ class MidtransModel {
     transactionTime = DateTime.parse(json['transaction_time']);
     transactionStatus = json['transaction_status'];
     fraudStatus = json['fraud_status'];
-    vaNumbers = json['va_numbers']
-        .map<BankModel>((bank) => BankModel.fromJson(bank))
-        .toList();
+    billKey = json['bill_key'];
+    billerCode = json['biller_code'];
+    // vaNumbers = json['va_numbers'] == null
+    //     ? UninitializedBankModel()
+    //     : json['va_numbers']
+    //         .map<BankModel>((bank) => BankModel.fromJson(bank))
+    //         .toList();
+    vaNumbers = json['va_numbers'] == null
+        ? UninitializedBankModel()
+        : BankModel.fromJson(json['va_numbers'][0]);
   }
 
   Map<String, dynamic> toJson() {
@@ -60,7 +71,13 @@ class MidtransModel {
       'transaction_time': transactionTime,
       'transaction_status': transactionStatus,
       'fraud_status': fraudStatus,
-      'va_numbers': vaNumbers!.map((bank) => bank.toJson()).toList(),
+      'bill_key': billKey!,
+      'biller_code': billerCode!,
+      // 'va_numbers': vaNumbers is UninitializedBankModel
+      //     ? {}
+      //     : vaNumbers!.map((bank) => bank.toJson()).toList(),
+      'va_numbers':
+          vaNumbers is UninitializedBankModel ? {} : vaNumbers!.toJson(),
     };
   }
 }
