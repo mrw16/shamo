@@ -4,6 +4,7 @@ import 'package:shamo/providers/auth_provider.dart';
 import 'package:shamo/providers/cart_provider.dart';
 import 'package:shamo/providers/transaction_provider.dart';
 import 'package:shamo/theme.dart';
+import 'package:shamo/widgets/loading_button.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});
@@ -196,27 +197,35 @@ class _PaymentPageState extends State<PaymentPage> {
     }
 
     Widget paymentButton() {
-      return Container(
-        height: 50,
-        width: double.infinity,
-        margin: EdgeInsets.all(defaultMargin),
-        child: TextButton(
-          onPressed: handleCheckout,
-          style: TextButton.styleFrom(
-            backgroundColor: primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
-          child: Text(
-            'Pay Now',
-            style: primaryTextStyle.copyWith(
-              fontSize: 16,
-              fontWeight: medium,
-            ),
-          ),
-        ),
-      );
+      return isLoading
+          ? Container(
+              width: double.infinity,
+              margin: EdgeInsets.all(
+                defaultMargin,
+              ),
+              child: LoadingButton(),
+            )
+          : Container(
+              height: 50,
+              width: double.infinity,
+              margin: EdgeInsets.all(defaultMargin),
+              child: TextButton(
+                onPressed: handleCheckout,
+                style: TextButton.styleFrom(
+                  backgroundColor: primaryColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  'Pay Now',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 16,
+                    fontWeight: medium,
+                  ),
+                ),
+              ),
+            );
     }
 
     return Scaffold(
@@ -227,7 +236,7 @@ class _PaymentPageState extends State<PaymentPage> {
           card(),
           content(),
           Spacer(),
-          paymentButton(),
+          isLoading == false ? paymentButton() : LoadingButton(),
         ],
       ),
     );

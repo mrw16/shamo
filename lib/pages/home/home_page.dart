@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo/models/user_model.dart';
 import 'package:shamo/providers/auth_provider.dart';
+import 'package:shamo/providers/category_provider.dart';
 import 'package:shamo/providers/product_provider.dart';
 import 'package:shamo/theme.dart';
 import 'package:shamo/widgets/product_card.dart';
@@ -13,6 +14,7 @@ class HomePage extends StatelessWidget {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UserModel user = authProvider.user;
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    CategoryProvider categoryProvider = Provider.of<CategoryProvider>(context);
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -63,117 +65,39 @@ class HomePage extends StatelessWidget {
       return Container(
           margin: EdgeInsets.only(
             top: defaultMargin,
+            left: 20,
           ),
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: [
-                SizedBox(
-                  width: defaultMargin,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: primaryColor,
-                  ),
-                  child: Text(
-                    'All Shoes',
-                    style: primaryTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
+              children: categoryProvider.categories
+                  .map(
+                    (categories) => GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
+                        margin: EdgeInsets.only(right: 16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: subtitleColor,
+                          ),
+                          color: transparantColor,
+                        ),
+                        child: Text(
+                          categories.name,
+                          style: primaryTextStyle.copyWith(
+                            fontSize: 13,
+                            fontWeight: medium,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: subtitleColor,
-                    ),
-                    color: transparantColor,
-                  ),
-                  child: Text(
-                    'Running',
-                    style: subtitleTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: subtitleColor,
-                    ),
-                    color: transparantColor,
-                  ),
-                  child: Text(
-                    'Training',
-                    style: subtitleTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: subtitleColor,
-                    ),
-                    color: transparantColor,
-                  ),
-                  child: Text(
-                    'Basket',
-                    style: subtitleTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
-                  ),
-                  margin: EdgeInsets.only(right: 16),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: subtitleColor,
-                    ),
-                    color: transparantColor,
-                  ),
-                  child: Text(
-                    'Hiking',
-                    style: subtitleTextStyle.copyWith(
-                      fontSize: 13,
-                      fontWeight: medium,
-                    ),
-                  ),
-                ),
-              ],
+                  )
+                  .toList(),
             ),
           ));
     }
